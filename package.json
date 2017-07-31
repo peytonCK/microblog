@@ -1,0 +1,26 @@
+{
+  "name": "microblog",
+  "version": "1.0.0",
+  "description": "node project for study",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peytonCK/microblog.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "gpd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peytonCK/microblog/issues"
+  },
+  "homepage": "https://github.com/peytonCK/microblog#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
