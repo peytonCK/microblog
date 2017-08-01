@@ -1,8 +1,15 @@
 const express = require('express');
 const app = express();
 
-app.get('/', function(req, res) {
-	res.send('Hello World!');
+app.use(express.static('public')); //静态资源中间件来指定静态资源路径
+app.set('views', './views'); //指定模板目录
+app.engine('html', require('ejs').renderFile); //定义模板引擎
+app.set('view engine', 'html'); //指定模板引擎
+
+app.get('/', function(req, res, next) {
+	res.render('index', {
+		title: '测试11111'
+	});
 });
 
 app.get('/login', function(req, res) {
