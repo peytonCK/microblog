@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microblog</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
+    <![endif]-->
+    <!-- styles -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="header">
+	<h1>Microblog</h1>
+	<a href="/">首页</a>
+	<% if(user && !user.userId){ %>
+		<a href="/login">登入</a>
+		<a href="/register">注册</a>
+	<% }else { %>
+		<a href="/user/<%= user.userId %>"><%=user.userName%></a>
+		<a href="/logout">登出</a>
+	<% } %>
+</div>

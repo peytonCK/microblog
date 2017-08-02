@@ -1,3 +1,7 @@
+const route = require('./route');
+console.log(route);
+// console.log(route.hello);
+route.hello();
 const express = require('express');
 const app = express();
 
@@ -8,20 +12,56 @@ app.set('view engine', 'html'); //指定模板引擎
 
 app.get('/', function(req, res, next) {
 	res.render('index', {
-		title: '测试11111'
+		title: '测试11111',
+		user: {
+			// userId: 222222,
+			// userName: "gpd"
+		},
+		items: [{
+			userId: 111111,
+			userName: 'gpd1',
+			time: '2017-7-26',
+			content: "测试内容"
+		}, {
+			userId: 111112,
+			userName: 'gpd2',
+			time: '2017-7-26',
+			content: "测试内容2"
+		}]
 	});
 });
 
 app.get('/login', function(req, res) {
-	res.send("login page1");
+	res.render("login", {
+		user: {}
+	});
 });
 
 app.get('/register', function(req, res) {
-	res.send("register page");
+	res.render("register", {
+		user: {}
+	});
 });
 
 app.get('/user/:userId', function(req, res) {
-	res.send("user:" + req.params.userId + " page");
+	res.render('user', {
+		title: '测试11111',
+		user: {
+			// userId: 222222,
+			// userName: "gpd"
+		},
+		items: [{
+			userId: 111111,
+			userName: 'gpd1',
+			time: '2017-7-26',
+			content: "测试内容"
+		}, {
+			userId: 111112,
+			userName: 'gpd2',
+			time: '2017-7-26',
+			content: "测试内容2"
+		}]
+	});
 });
 
 const server = app.listen(9009, function() {

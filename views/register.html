@@ -1,0 +1,23 @@
+<% include header.html%>
+    <div class="error">
+        <span class="message"></span>
+    </div>
+    <div class="form-wrapper">
+        <h3>用户注册</h3>
+        <div class="row">
+            <label for="username">用户名</label>
+            <input type="text" name="username" id="username" placeholder="用户名用来登录和显示" />
+        </div>
+        <div class="row">
+            <label for="password">口令</label>
+            <input type="password" name="password" id="password" />
+        </div>
+        <div class="row">
+            <label for="passwordConfirm">确认口令</label>
+            <input type="password" name="passwordConfirm" id="passwordConfirm" />
+        </div>
+        <div class="actions">
+            <button class="btn">注册</button>
+        </div>
+    </div>
+    <% include footer.html%>
