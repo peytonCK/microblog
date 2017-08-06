@@ -18,11 +18,19 @@
 <div class="header">
 	<h1>Microblog</h1>
 	<a href="/">首页</a>
-	<% if(user && !user.name){ %>
+	<% if(user && !user.userId){ %>
 		<a href="/login">登入</a>
 		<a href="/register">注册</a>
 	<% }else { %>
-		<a href="/user/<%= user.name %>"><%=user.name%></a>
+		<a href="/user/<%= user.userId %>"><%=user.userName%></a>
 		<a href="/logout">登出</a>
 	<% } %>
 </div>
+
+<%- body %>
+<div class="footer">
+    <span>BYGPD 2017</span>
+</div>
+</body>
+
+</html>
