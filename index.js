@@ -42,18 +42,7 @@ app.get('/', function(req, res, next) {
 
 	}
 	res.render('index', {
-		user: user,
-		items: [{
-			userId: 111111,
-			userName: 'gpd1',
-			time: '2017-7-26',
-			content: "测试内容"
-		}, {
-			userId: 111112,
-			userName: 'gpd2',
-			time: '2017-7-26',
-			content: "测试内容2"
-		}]
+		user: user
 	});
 });
 
@@ -69,6 +58,22 @@ app.get('/login', function(req, res) {
 	});
 });
 
+app.get('/logout', function(req, res, next) {
+	req.session.destroy(function(err) {
+		if (err) {
+			res.json({
+				ret_code: 2,
+				ret_msg: '退出登录失败'
+			});
+			return;
+		}
+
+		// req.session.loginUser = null;
+		res.clearCookie("microblog");
+		res.redirect('/');
+	})
+})
+
 app.get('/register', function(req, res) {
 	res.render("register", {
 		user: {}
@@ -76,23 +81,14 @@ app.get('/register', function(req, res) {
 });
 
 app.get('/user/:userId', function(req, res) {
+	let user = {};
+	console.log(req.session);
+	if (req.session.user) {
+		user = req.session.user;
+
+	}
 	res.render('user', {
-		title: '测试11111',
-		user: {
-			// userId: 222222,
-			// userName: "gpd"
-		},
-		items: [{
-			userId: 111111,
-			userName: 'gpd1',
-			time: '2017-7-26',
-			content: "测试内容"
-		}, {
-			userId: 111112,
-			userName: 'gpd2',
-			time: '2017-7-26',
-			content: "测试内容2"
-		}]
+		user: user
 	});
 });
 

@@ -65,4 +65,55 @@ router.post('/api/findUser', function(req, res) {
 	})
 });
 
+
+router.post('/api/addNote', function(req, res) {
+	console.log(req.session);
+	let item = {
+		userName: req.session.user.name,
+		content: req.body.content,
+		time: new Date()
+	};
+	let returnData = {
+		status: 0,
+		error: '',
+		data: {}
+	};
+	db.note.add(item, function(result) {
+		if (!result.status) {
+			returnData.error = "发布失败，请再次尝试。"
+			res.send(returnData)
+		} else {
+			returnData.status = 1;
+			returnData.data = item;
+			res.send(returnData);
+		}
+	})
+});
+
+router.get('/api/findNotes', function(req, res) {
+	console.log(req.query);
+
+	let item = {};
+
+	if (req.query.userName) {
+		item.userName = req.query.userName;
+	}
+
+	let returnData = {
+		status: 0,
+		error: '',
+		data: {}
+	};
+	db.note.find(item, function(result) {
+		if (!result.status) {
+			returnData.error = "查找失败，请再次尝试。"
+			res.send(returnData)
+		} else {
+			returnData.status = 1;
+			returnData.data = result.data;
+			res.send(returnData);
+		}
+	})
+});
+
 module.exports = router;

@@ -46,21 +46,20 @@ let user = {
 }
 
 
-let item = {
+let note = {
 	add: function(note, callback) {
 		dbConnect(note, function(err, db) {
 			let collection = db.collection('notes');
-			collection.insert(note).toArray(
-				function(err, result) {
-					let res = {
-						status: err ? 0 : 1,
-						error: err ? err : "",
-						data: result
-					}
-					callback(res);
+			collection.insert(note, function(err, result) {
+				let res = {
+					status: err ? 0 : 1,
+					error: err ? err : "",
+					data: result
+				}
+				callback(res);
 
-					db.close();
-				})
+				db.close();
+			})
 		})
 	},
 	update: function() {
@@ -72,7 +71,9 @@ let item = {
 	find: function(note, callback) {
 		dbConnect(note, function(err, db) {
 			let collection = db.collection('notes');
-			collection.find(note).toArray(
+			collection.find(note).sort({
+				time: -1
+			}).toArray(
 				function(err, result) {
 					let res = {
 						status: err ? 0 : 1,
@@ -89,5 +90,5 @@ let item = {
 
 module.exports = {
 	user,
-	item
+	note
 }
