@@ -25,10 +25,8 @@ router.post('/api/addUser', function(req, res) {
 				res.send(returnData)
 			} else {
 				db.user.add(user, function(result) {
-					req.session.regenerate(function(err) {
-						req.session.user = user;
-						console.log(req.session);
-					})
+					req.session.user = user;
+					console.log(req.session);
 					res.send(result);
 
 				})
@@ -59,14 +57,9 @@ router.post('/api/findUser', function(req, res) {
 				res.send(returnData)
 			} else {
 				returnData.status = 1;
-				//更新 session????
-				req.session.regenerate(function(err) {
-					req.session.user = user;
-					console.log(req.session);
-				});
+				req.session.user = user;
+				console.log(req.session);
 				res.send(returnData);
-				//res.redirect('/');
-
 			}
 		}
 	})

@@ -56,7 +56,7 @@ $(".btn-login").click(function() {
 		User.login(user, function(data) {
 			if (data.status) {
 				showMessage();
-				//location.href = "/";
+				location.href = "/";
 			} else {
 				showMessage(data.error);
 			}

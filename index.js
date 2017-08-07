@@ -1,6 +1,5 @@
 const express = require('express');
 const session = require('express-session');
-//const MongoStore = require('connect-mongo')(session);
 const FileStore = require('session-file-store')(session);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -23,8 +22,7 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
-		path: "/",
-		maxAge: 10 * 1000
+		maxAge: 5 * 60 * 1000
 	}
 }))
 
@@ -99,6 +97,7 @@ app.get('/user/:userId', function(req, res) {
 });
 
 app.use(dataApi);
+
 
 const server = app.listen(9009, function() {
 	const host = server.address().address;
