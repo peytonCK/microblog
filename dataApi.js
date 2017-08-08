@@ -1,12 +1,19 @@
 const express = require('express');
+const crypto = require('crypto');
 const router = express.Router();
 const db = require('./db');
+
+function md5Password(password) {
+	let md5 = crypto.createHash('md5');
+	md5.update(password);
+	return md5.digest('hex');
+}
 
 router.post('/api/addUser', function(req, res) {
 	console.log(req.body);
 	let user = {
 		name: req.body.name,
-		password: req.body.password
+		password: md5Password(req.body.password)
 	};
 	db.user.find({
 		name: req.body.name
@@ -26,6 +33,12 @@ router.post('/api/addUser', function(req, res) {
 			} else {
 				db.user.add(user, function(result) {
 					req.session.user = user;
+					res.cookie(
+						"user",
+						user, {
+							maxAge: 1000 * 60 * 60
+						}
+					);
 					console.log(req.session);
 					res.send(result);
 
@@ -40,7 +53,7 @@ router.post('/api/findUser', function(req, res) {
 	console.log(req.body);
 	let user = {
 		name: req.body.name,
-		password: req.body.password
+		password: md5Password(req.body.password)
 	};
 	let returnData = {
 		status: 0,
@@ -58,6 +71,12 @@ router.post('/api/findUser', function(req, res) {
 			} else {
 				returnData.status = 1;
 				req.session.user = user;
+				res.cookie(
+					"user",
+					user, {
+						maxAge: 1000 * 60 * 60
+					}
+				);
 				console.log(req.session);
 				res.send(returnData);
 			}

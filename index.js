@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const redisStore = require('connect-redis')(session);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -19,6 +20,7 @@ app.use(session({
 	secret: '12345',
 	name: 'microblog',
 	store: new FileStore(),
+	//store: new redisStore(),
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
@@ -34,12 +36,23 @@ app.set("view options", {
 	"layout": true
 });
 
+app.use(function(req, res, next) {
+	// if (!req.session.user) {
+	// 	res.redirect("/login");
+	// } else {
+	// 	next();
+	// }
+	if (res.cookie && res.cookie.user) {
+		req.session.user = res.cookie.user;
+	}
+	next();
+})
+
 app.get('/', function(req, res, next) {
 	let user = {};
 	console.log(req.session);
 	if (req.session.user) {
 		user = req.session.user;
-
 	}
 	res.render('index', {
 		user: user
