@@ -1,7 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-const redisStore = require('connect-redis')(session);
+const RedisStore = require('connect-redis')(session);
+const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -19,8 +20,15 @@ app.use(cookieParser());
 app.use(session({
 	secret: '12345',
 	name: 'microblog',
-	store: new FileStore(),
-	//store: new redisStore(),
+	//store: new FileStore(),
+	store: new RedisStore({
+		host: "127.0.0.1",
+		port: 6379
+	}),
+	// store: new MongoStore({
+	// 	url: "mongodb://localhost/microblog",
+	// 	autoRemove: 'native'
+	// }),
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
